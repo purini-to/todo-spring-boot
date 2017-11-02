@@ -12,9 +12,19 @@ pipeline {
       }
     }
     stage('Test') {
-      steps {
-        sh 'gradle test'
-        junit '**/build/test-results/test/TEST-*.xml'
+      parallel {
+        stage('Test') {
+          steps {
+            sh 'gradle test'
+            junit '**/build/test-results/test/TEST-*.xml'
+          }
+        }
+        stage('IntegrationTest') {
+          steps {
+            sh 'gradle integrationTest'
+            junit '**/build/test-results/integrationTest/TEST-*.xml'
+          }
+        }
       }
     }
     stage('Assemble') {
