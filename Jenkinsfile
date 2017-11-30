@@ -61,5 +61,5 @@ def inputArtifact() {
 }
 
 def echoUserInput() {
-  echo userInput.artifactId
+  echo userInput
 }
