@@ -1,4 +1,4 @@
-userInput = null
+artifactId = null
 
 pipeline {
   agent {
@@ -16,6 +16,7 @@ pipeline {
     }
     stage('Compile') {
       steps {
+        echoUserInput()
         sh 'gradle clean classes'
       }
     }
@@ -54,12 +55,12 @@ pipeline {
 }
 
 def inputArtifact() {
-  userInput = input(
+  artifactId = input(
     id: 'userInput', message: 'アーティファクトIDを入力してください。', parameters: [
     [$class: 'StringParameterDefinition', description: 'アーティファクトID', name: 'artifactId']
   ])
 }
 
 def echoUserInput() {
-  echo userInput
+  echo artifactId
 }
