@@ -6,6 +6,11 @@ pipeline {
     
   }
   stages {
+    stage('Promotion') {
+      steps {
+        input()
+      }
+    }
     stage('Compile') {
       steps {
         sh 'gradle clean classes'
