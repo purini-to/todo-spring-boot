@@ -1,3 +1,5 @@
+userInput = null
+
 pipeline {
   agent {
     docker {
@@ -51,9 +53,13 @@ pipeline {
 }
 
 def inputArtifact() {
-  def userInput = input(
+  userInput = input(
     id: 'userInput', message: 'アーティファクトIDを入力してください。', parameters: [
     [$class: 'StringParameterDefinition', description: 'アーティファクトID', name: 'artifactId']
-  ]) 
+  ])
+  echoUserInput()
+}
+
+def echoUserInput() {
   echo "${userInput.artifactId}"
 }
