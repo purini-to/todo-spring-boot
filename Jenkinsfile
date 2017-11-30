@@ -57,7 +57,6 @@ def inputArtifact() {
     id: 'userInput', message: 'アーティファクトIDを入力してください。', parameters: [
     [$class: 'StringParameterDefinition', description: 'アーティファクトID', name: 'artifactId']
   ])
-  echoUserInput()
 }
 
 def echoUserInput() {
