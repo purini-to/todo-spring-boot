@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Promotion') {
       steps {
-        input(message: 'Deploy to Production?', id: 'userInput', ok: 'yes', submitter: 'artifact', submitterParameter: 'artifact')
+        def a = input(message: 'Deploy to Production?', id: 'userInput', ok: 'yes', submitter: 'artifact', submitterParameter: 'artifact')
       }
     }
     stage('Compile') {
