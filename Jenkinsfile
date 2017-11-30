@@ -10,6 +10,7 @@ pipeline {
   stages {
     stage('Promotion') {
       steps {
+        sh 'printenv'
         inputArtifact()
         echoUserInput()
       }
