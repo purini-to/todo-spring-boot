@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Promotion') {
       steps {
-        def userInput = input(id: 'userInput', message: 'Let\'s promote?')
+        input 'Deploy to Production?'
         echo ("Env: "+userInput['env'])
         echo ("Target: "+userInput['target'])
 
