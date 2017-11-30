@@ -33,13 +33,6 @@ pipeline {
         stash(name: 'app', includes: '**/build/libs/*.war')
       }
     }
-    stage('Promotion') {
-      def userInput = input(
-       id: 'userInput', message: 'Let\'s promote?', parameters: [
-       [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env']
-      ])
-      echo ("Env: "+userInput)
-    }
     stage('Deploy to Production') {
       steps {
         unstash 'app'
