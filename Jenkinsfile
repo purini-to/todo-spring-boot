@@ -9,10 +9,6 @@ pipeline {
     stage('Promotion') {
       steps {
         input 'Deploy to Production?'
-        echo ("Env: "+userInput['env'])
-        echo ("Target: "+userInput['target'])
-
-        and the result will be
       }
     }
     stage('Compile') {
