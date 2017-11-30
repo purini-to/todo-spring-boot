@@ -35,14 +35,11 @@ pipeline {
     }
     stage('Promotion') {
       steps {
-        timeout(time: 10, unit: 'MINUTES') {
-          def version = input(
-            id: 'userInput', message: 'アーティファクトIDを入力してください', parameters: [
-            [$class: 'TextParameterDefinition', description: 'artifact-', name: 'artifact']
-          ])
-          echo "${userInput.artifact}"
-        }
-        
+        def userInput = input(
+         id: 'userInput', message: 'Let\'s promote?', parameters: [
+         [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env']
+        ])
+        echo ("Env: "+userInput)
       }
     }
     stage('Deploy to Production') {
