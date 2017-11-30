@@ -34,13 +34,11 @@ pipeline {
       }
     }
     stage('Promotion') {
-      steps {
-        def userInput = input(
-         id: 'userInput', message: 'Let\'s promote?', parameters: [
-         [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env']
-        ])
-        echo ("Env: "+userInput)
-      }
+      def userInput = input(
+       id: 'userInput', message: 'Let\'s promote?', parameters: [
+       [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env']
+      ])
+      echo ("Env: "+userInput)
     }
     stage('Deploy to Production') {
       steps {
