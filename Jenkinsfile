@@ -36,7 +36,11 @@ pipeline {
     stage('Promotion') {
       steps {
         timeout(time: 10, unit: 'MINUTES') {
-          input 'Deploy to Production?'
+          def version = input(
+            id: 'userInput', message: 'アーティファクトIDを入力してください', parameters: [
+            [$class: 'TextParameterDefinition', description: 'artifact-', name: 'artifact']
+          ])
+          echo "${userInput.artifact}"
         }
         
       }
