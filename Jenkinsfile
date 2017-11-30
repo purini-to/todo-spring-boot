@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Promotion') {
       steps {
-        input()
+        inputUser()
       }
     }
     stage('Compile') {
@@ -50,7 +50,7 @@ pipeline {
   }
 }
 
-def input() {
+def inputUser() {
   def userInput = input(
     id: 'userInput', message: 'Let\'s go?', parameters: [
     [$class: 'TextParameterDefinition', defaultValue: 'a text\nwith several lines', description: 'A multiple lines text', name: 'aText'],
