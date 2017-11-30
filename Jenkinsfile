@@ -11,6 +11,7 @@ pipeline {
     stage('Promotion') {
       steps {
         inputArtifact()
+        echoUserInput()
       }
     }
     stage('Compile') {
@@ -60,5 +61,5 @@ def inputArtifact() {
 }
 
 def echoUserInput() {
-  echo "${userInput.artifactId}"
+  echo userInput.artifactId
 }
