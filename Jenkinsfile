@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'java:8-jdk-alpine'
-    }
-    
-  }
+  agent none
   stages {    
     stage('コンパイル') {
       steps {
@@ -54,8 +49,5 @@ pipeline {
         sh 'echo "Deploy"'
       }
     }
-  }
-  environment {
-    TZ = 'Asia/Tokyo'
   }
 }
