@@ -1,35 +1,43 @@
 pipeline {
   agent {
     docker {
-      image 'gradle:jdk8'
+      image 'java:8-jdk-alpine'
     }
     
   }
   stages {    
     stage('コンパイル') {
       steps {
-        sh 'gradle clean classes'
+        sh './gradlew clean classes'
       }
     }
     stage('テスト') {
       parallel {
         stage('ユニットテスト') {
           steps {
-            sh 'gradle test'
-            junit '**/build/test-results/test/TEST-*.xml'
+            sh './gradlew test'
+          }
+          post {
+            always {
+              junit '**/build/test-results/test/TEST-*.xml'
+            }
           }
         }
         stage('インテグレーションテスト') {
           steps {
-            sh 'gradle integrationTest'
-            junit '**/build/test-results/integrationTest/TEST-*.xml'
+            sh './gradlew integrationTest'
+          }
+          post {
+            always {
+              junit '**/build/test-results/integrationTest/TEST-*.xml'
+            }
           }
         }
       }
     }
     stage('ビルド') {
       steps {
-        sh 'gradle assemble'
+        sh './gradlew assemble'
         stash(name: 'app', includes: '**/build/libs/*.war')
       }
     }
@@ -43,7 +51,7 @@ pipeline {
     stage('本番デプロイ') {
       steps {
         unstash 'app'
-        sh 'ls -lt'
+        sh 'echo "Deploy"'
       }
     }
   }
