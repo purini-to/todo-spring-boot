@@ -1,5 +1,3 @@
-artifactId = null
-
 pipeline {
   agent {
     docker {
@@ -7,29 +5,22 @@ pipeline {
     }
     
   }
-  stages {
-    stage('Promotion') {
-      steps {
-        sh 'printenv'
-        inputArtifact()
-        echoUserInput()
-      }
-    }
-    stage('Compile') {
+  stages {    
+    stage('コンパイル') {
       steps {
         echoUserInput()
         sh 'gradle clean classes'
       }
     }
-    stage('Test') {
+    stage('テスト') {
       parallel {
-        stage('Test') {
+        stage('ユニットテスト') {
           steps {
             sh 'gradle test'
             junit '**/build/test-results/test/TEST-*.xml'
           }
         }
-        stage('IntegrationTest') {
+        stage('インテグレーションテスト') {
           steps {
             sh 'gradle integrationTest'
             junit '**/build/test-results/integrationTest/TEST-*.xml'
@@ -37,13 +28,20 @@ pipeline {
         }
       }
     }
-    stage('Assemble') {
+    stage('ビルド') {
       steps {
         sh 'gradle assemble'
         stash(name: 'app', includes: '**/build/libs/*.war')
       }
     }
-    stage('Deploy to Production') {
+    stage('デプロイ確認(10分以内)') {
+      steps {
+        timeout(time: 10, unit: 'MINUTES') {
+          input 'Deploy to Production?'
+        }
+      }
+    }
+    stage('本番デプロイ') {
       steps {
         unstash 'app'
         sh 'ls -lt'
@@ -53,15 +51,4 @@ pipeline {
   environment {
     TZ = 'Asia/Tokyo'
   }
-}
-
-def inputArtifact() {
-  artifactId = input(
-    id: 'userInput', message: 'アーティファクトIDを入力してください。', parameters: [
-    [$class: 'StringParameterDefinition', description: 'アーティファクトID', name: 'artifactId']
-  ])
-}
-
-def echoUserInput() {
-  echo artifactId
 }
