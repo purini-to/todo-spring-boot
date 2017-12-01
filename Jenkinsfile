@@ -8,7 +8,6 @@ pipeline {
   stages {    
     stage('コンパイル') {
       steps {
-        echoUserInput()
         sh 'gradle clean classes'
       }
     }
