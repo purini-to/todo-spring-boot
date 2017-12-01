@@ -39,7 +39,7 @@ pipeline {
     stage('デプロイ確認(10分以内)') {
       steps {
         timeout(time: 10, unit: 'MINUTES') {
-          input 'Deploy to Production?'
+          input '本番にデプロイします。よろしいですか？'
         }
       }
     }
